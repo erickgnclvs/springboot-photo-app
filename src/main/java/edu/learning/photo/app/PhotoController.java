@@ -1,6 +1,7 @@
 package edu.learning.photo.app;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,6 +36,15 @@ public class PhotoController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         return photo;
+    }
+
+    @DeleteMapping("photos/{id}")
+    public void deletePhoto(@PathVariable String id) {
+        Photo photo = db.remove(id);
+        if (photo == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+
     }
 
 
