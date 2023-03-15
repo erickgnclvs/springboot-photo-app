@@ -1,9 +1,12 @@
 package edu.learning.photo.app;
 
+import jakarta.validation.constraints.NotEmpty;
+
 public class Photo {
 
     private String id;
 
+    @NotEmpty
     private String filename;
 
     public Photo() {

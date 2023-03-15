@@ -1,5 +1,6 @@
 package edu.learning.photo.app;
 
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -41,7 +42,7 @@ public class PhotoController {
     }
 
     @PostMapping("/photos")
-    public Photo createPhoto(@RequestBody Photo photo) {
+    public Photo createPhoto(@RequestBody @Valid Photo photo) {
         photo.setId(UUID.randomUUID().toString());
         db.put(photo.getId(), photo);
         return photo;
