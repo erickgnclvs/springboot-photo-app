@@ -1,6 +1,6 @@
 package edu.learning.photo.app;
 
-import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,9 +12,13 @@ import java.util.*;
 @RestController
 public class PhotoController {
 
-    private Map<String, Photo> db =new HashMap<>() {{
-        put("1", new Photo("1", "hello.jpg"));
-    }};
+    @Autowired
+    private final PhotoService photoService;
+
+    public PhotoController(PhotoService photoService) {
+        this.photoService = photoService;
+    }
+
 
     @GetMapping("/")
     public String hello() {
@@ -23,12 +27,12 @@ public class PhotoController {
 
     @GetMapping("/photos")
     public Collection<Photo> getPhotos() {
-        return db.values();
+        return photoService.getPhotos();
     }
 
     @GetMapping("/photos/{id}")
     public Photo getPhoto(@PathVariable String id) {
-        Photo photo = db.get(id);
+        Photo photo = photoService.getPhotoById(id);
         if (photo == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
@@ -37,7 +41,7 @@ public class PhotoController {
 
     @DeleteMapping("/photos/{id}")
     public void deletePhoto(@PathVariable String id) {
-        Photo photo = db.remove(id);
+        Photo photo = photoService.remove(id);
         if (photo == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
@@ -45,12 +49,7 @@ public class PhotoController {
 
     @PostMapping("/photos")
     public Photo createPhoto(@RequestPart("data") MultipartFile file) throws IOException {
-        Photo photo = new Photo();
-        photo.setId(UUID.randomUUID().toString());
-        photo.setFilename(file.getOriginalFilename());
-        photo.setData(file.getBytes());
-        db.put(photo.getId(), photo);
-        return photo;
+        return photoService.save(file.getOriginalFilename(), file.getBytes());
     }
 
 

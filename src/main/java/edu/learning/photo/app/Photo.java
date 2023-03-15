@@ -1,5 +1,6 @@
 package edu.learning.photo.app;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.NotEmpty;
 
 public class Photo {
@@ -9,6 +10,7 @@ public class Photo {
     @NotEmpty
     private String filename;
 
+    @JsonIgnore
     private byte[] data;
 
     public byte[] getData() {
