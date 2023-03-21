@@ -1,5 +1,6 @@
-package edu.learning.photo.app;
+package edu.learning.photo.app.service;
 
+import edu.learning.photo.app.model.Photo;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;

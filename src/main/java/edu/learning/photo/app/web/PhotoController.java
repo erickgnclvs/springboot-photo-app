@@ -1,5 +1,7 @@
-package edu.learning.photo.app;
+package edu.learning.photo.app.web;
 
+import edu.learning.photo.app.model.Photo;
+import edu.learning.photo.app.service.PhotoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
